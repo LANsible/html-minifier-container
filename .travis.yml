@@ -1,0 +1,41 @@
+dist: trusty
+language: minimal
+sudo: false
+
+env:
+  global:
+    - fast_finish: true
+    - DOCKER_NAMESPACE=lansible
+    - CONTAINER_NAME=html-minifier
+
+services:
+  - docker
+
+before_script:
+  - docker pull ${DOCKER_NAMESPACE}/${CONTAINER_NAME}:latest
+
+script:
+  - |
+    if [[ ${TRAVIS_TAG} != "" ]]
+    then
+      TAG_STRING=" \
+        -t ${DOCKER_NAMESPACE}/${CONTAINER_NAME}:${TRAVIS_TAG} \
+        -t ${DOCKER_NAMESPACE}/${CONTAINER_NAME}:latest"
+    elif [[ ${TRAVIS_PULL_REQUEST} == false ]]
+    then
+      TAG_STRING=" \
+        -t ${DOCKER_NAMESPACE}/${CONTAINER_NAME}:${TRAVIS_BRANCH}"
+    fi
+  - echo ${TAG_STRING}
+  - docker build . --cache-from ${DOCKER_NAMESPACE}/${CONTAINER_NAME}:latest ${TAG_STRING}
+
+deploy:
+  provider: script
+  script: bash deploy/deploy.sh
+  on:
+    all_branches: true
+
+notifications:
+  email:
+    on_failure: change
+    on_success: never
