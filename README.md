@@ -1,6 +1,6 @@
-# html-minifier-container
+# uglifycss-container
 
-Container based html minifier based on [kangax/html-minifier](https://github.com/kangax/html-minifier)
+Container based css minifier based on [fmarcia/uglifycss](https://github.com/fmarcia/uglifycss)
 
 ## Credits
-<https://github.com/kangax/html-minifier>
+<https://github.com/fmarcia/uglifycss>

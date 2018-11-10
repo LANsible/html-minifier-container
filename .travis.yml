@@ -6,7 +6,7 @@ env:
   global:
     - fast_finish: true
     - DOCKER_NAMESPACE=lansible
-    - CONTAINER_NAME=html-minifier
+    - CONTAINER_NAME=uglifycss
 
 services:
   - docker
